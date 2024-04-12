@@ -122,3 +122,17 @@ int main()
 
     return 0;
 }
+
+/*
+
+Algoritmul Ford-Fulkerson este utilizat pentru a găsi fluxul maxim într-o rețea de circulație, cum ar fi o rețea de transporturi sau o rețea de comunicații. Ideea de bază este de a găsi un lanț de augmentare, adică un lanț de noduri și muchii de la sursă la destinație care poate crește fluxul total în rețea.
+
+Iată cum funcționează în linii mari:
+
+Inițializare: Fluxul inițial este setat la 0.
+Găsirea unui lanț de augmentare: Se folosește o metodă de căutare, cum ar fi căutarea în lățime sau căutarea în adâncime, pentru a găsi un lanț de la sursă la destinație în care fiecare muchie are capacitate pozitivă și există spațiu pentru fluxul suplimentar.
+Determinarea fluxului maxim pentru lanțul de augmentare: Fluxul maxim care poate fi adăugat la fluxul curent este determinat de capacitatea minimă a muchiilor din lanțul de augmentare.
+Actualizarea rețelei: Se actualizează fluxul pe fiecare muchie din lanțul de augmentare.
+Repetarea: Se repetă pașii 2-4 până când nu mai există niciun lanț de augmentare de la sursă la destinație.
+Algoritmul Ford-Fulkerson nu este singular; este o abordare generală care poate fi implementată în mai multe moduri, cea mai cunoscută fiind algoritmul Edmonds-Karp, care utilizează căutarea în lățime pentru a găsi lanțurile de augmentare.
+*/
