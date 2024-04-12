@@ -1,94 +1,124 @@
 #include <iostream>
-#include <queue>
-#include <cstring>
-#include <vector>
+
 using namespace std;
 
-const int MAX_NODES = 10;
-const int INF = 1e9;
+// Declarații ale unor constante
+int nmax = 20; 
+int inf = 100000;
 
-int capacities[MAX_NODES][MAX_NODES];
-int flowPassed[MAX_NODES][MAX_NODES];
-vector<int> graph[MAX_NODES];
-int parentsList[MAX_NODES];
+// Matricea de adiacență pentru duratele activităților
+float la[20][20];
 
-int bfs(int startNode, int endNode, int limit) {
-    memset(parentsList, -1, sizeof(parentsList));
-    queue<int> q;
-    q.push(startNode);
-    parentsList[startNode] = -2;
+// Vectori pentru timpii minimi și maximi pentru evenimente
+float t[20], tb[20];
+
+// Variabilele globale pentru iterații
+int i, j, n;
+
+// Funcția pentru citirea datelor de intrare
+void citire()
+{
+    int i, m, x, y;  
+    float c;
     
-    while (!q.empty()) {
-        int currentNode = q.front();
-        q.pop();
-        
-        for (int nextNode : graph[currentNode]) {
-            if (parentsList[nextNode] == -1 && capacities[currentNode][nextNode] - flowPassed[currentNode][nextNode] >= limit) {
-                q.push(nextNode);
-                parentsList[nextNode] = currentNode;
-                
-                if (nextNode == endNode) {
-                    return true;
-                }
-            }
-        }
+    cout << "Dati numarul de activitati: "; 
+    cin >> m;
+    
+    // Citim arcele asociate activităților și duratele acestora
+    for (i = 1; i <= m; i++) {
+        cout << "Dati arcul asociat activitatii " << i << " si durata acesteia: ";
+        cin >> x >> y >> c; 
+        la[x][y] = c;
     }
-    
-    return false;
 }
 
-int fordFulkerson(int startNode, int endNode) {
-    int maxFlow = 0;
-    int limit = 1 << 30; // Initializam limita de scalare cu o valoare mare
+// Funcția pentru calculul timpilor minimi pentru fiecare eveniment
+void calct(int i)
+{
+    int j; 
+    float max;
     
-    while (limit > 0) {
-        while (bfs(startNode, endNode, limit)) {
-            int flow = INF;
-            int currentNode = endNode;
-            
-            while (currentNode != startNode) {
-                int previousNode = parentsList[currentNode];
-                flow = min(flow, capacities[previousNode][currentNode] - flowPassed[previousNode][currentNode]);
-                currentNode = previousNode;
-            }
-            
-            maxFlow += flow;
-            currentNode = endNode;
-            
-            while (currentNode != startNode) {
-                int previousNode = parentsList[currentNode];
-                flowPassed[previousNode][currentNode] += flow;
-                flowPassed[currentNode][previousNode] -= flow;
-                currentNode = previousNode;
-            }
-        }
+    // Dacă suntem pe primul eveniment, timpul minim este 0
+    if (i < 2) 
+        t[1] = 0;
+    else {
+        max = 0;
         
-        limit >>= 1; // Reducem limita de scalare la jumătate pentru următoarea iterație
+        // Iterăm prin toate evenimentele precedente și calculăm timpul minim pentru evenimentul curent
+        for (j = 1; j <= n; j++) 
+            if (la[j][i] >= 0) {
+                if (t[j] < 0) 
+                    calct(j);
+                if (max < la[j][i] + t[j]) 
+                    max = la[j][i] + t[j];
+            }
+        
+        t[i] = max;
     }
-    
-    return maxFlow;
 }
 
-int main() {
-    int nodesCount, edgesCount;
-    cout << "Numarul de noduri si arce: ";
-    cin >> nodesCount >> edgesCount;
-    int source, sink;
-    cout << "Sursa si destinatia: ";
-    cin >> source >> sink;
+// Funcția pentru calculul timpilor maximi pentru fiecare eveniment
+int calctb(int i)
+{
+    int j;
+    float min;
     
-    for (int edge = 0; edge < edgesCount; edge++) {
-        cout << "Nod start, nod final si capacitate: ";
-        int from, to, capacity;
-        cin >> from >> to >> capacity;
-        capacities[from][to] += capacity; // Adăugăm capacitatea pentru nodul de la from la to
-        graph[from].push_back(to);
-        capacities[to][from] += capacity; // Adăugăm capacitatea pentru nodul de la to la from
-        graph[to].push_back(from); // Considerând că graful este neorientat
+    // Dacă suntem pe ultimul eveniment, timpul maxim este timpul minim
+    if (i == n) 
+        tb[i] = t[i];
+    else {
+        min = inf;
+        
+        // Iterăm prin toate evenimentele următoare și calculăm timpul maxim pentru evenimentul curent
+        for (j = 1; j <= n; j++) 
+            if (la[i][j] >= 0) {
+                if (tb[j] < 0) 
+                    calctb(j);
+                if (min > tb[j] - la[i][j]) 
+                    min = tb[j] - la[i][j];
+            }
+        
+        tb[i] = min;
     }
     
-    int maxFlow = fordFulkerson(source, sink);
-    cout << "Fluxul maxim este: " << maxFlow << endl;
+    return 0; // Adăugăm o instrucțiune de return pentru a evita eroarea C4716
+}
+
+int main()
+{
+    // Citim numărul de evenimente
+    cout << "Dati numarul de evenimente ale lucrarii: ";
+    cin >> n;
     
+    // Inițializăm vectorii și matricea cu -1 (valoare semnificând lipsa unei relații)
+    for (i = 1; i <= n; i++) {
+        t[i] = -1; 
+        tb[i] = -1;
+        for (j = 1; j <= n; j++) 
+            la[i][j] = -1;
+    }
+    
+    // Citim datele de intrare
+    citire();
+    
+    // Calculăm timpii minimi pentru fiecare eveniment
+    calct(n);
+    
+    // Calculăm timpii maximi pentru fiecare eveniment
+    calctb(1);
+    
+    // Afișăm evenimentele critice (cu timpii minimi egali cu timpii maximi)
+    cout << "EVENIMENTELE CRITICE SUNT: " << endl;
+    for (i = 1; i <= n; i++)
+        if (t[i] == tb[i]) 
+            cout << "Evenimentul " << i << endl;
+    
+    // Afișăm activitățile critice (cu timpii minimi și maximi egali și cu durata activității adăugată la timpul minim)
+    cout << "ACTIVITATILE CRITICE SUNT: ";
+    for (i = 1; i <= n; i++)
+        for (j = 1; j <= n; j++)
+            if ((t[i] == tb[i]) && (t[j] == tb[j]) && (t[j] == t[i] + la[i][j])) 
+                cout << "Activitatea reprezentata de arcul: " << i << j << endl;
+
     return 0;
 }
