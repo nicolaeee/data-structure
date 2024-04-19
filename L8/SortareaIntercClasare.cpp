@@ -77,3 +77,50 @@ int main() {
 
     return 0;
 }
+
+/*
+Algoritmul Sortării prin Interclasare:
+Diviziunea (Împărțirea): Lista inițială este împărțită în două subliste egale sau aproximativ egale.
+Conducerea (Cucerirea): Se aplică recursiv algoritmul Sortării prin Interclasare pe fiecare sublistă separat, până când fiecare sublistă conține un singur element sau niciunul.
+Combinarea: Sublistele sortate sunt apoi combinate într-o listă ordonată prin interclasare. Acest proces implică compararea elementelor din cele două subliste și plasarea lor în ordine crescătoare în lista finală.
+
+Pseudocode:
+SortareInterclasare(lista)
+    // Daca lista are unul sau niciun element, este deja sortata
+    dacă lungime(lista) ≤ 1
+        return lista
+    
+    // Impartim lista in doua subliste aproximativ egale
+    mijloc <- lungime(lista) / 2
+    stanga <- Sublista(lista, 0, mijloc - 1)
+    dreapta <- Sublista(lista, mijloc, lungime(lista) - 1)
+    
+    // Aplicam recursiv Sortarea prin Interclasare pe subliste
+    stanga <- SortareInterclasare(stanga)
+    dreapta <- SortareInterclasare(dreapta)
+    
+    // Combina subliste ordonate in lista finala
+    return Interclaseaza(stanga, dreapta)
+
+Interclaseaza(stanga, dreapta)
+    lista_finala <- lista vida
+    
+    // Comparăm elementele din cele două subliste și le plasăm în ordine crescătoare în lista finală
+    cat timp stanga nu este vida și dreapta nu este vida
+        dacă primul element din stanga ≤ primul element din dreapta
+            Adaugam primul element din stanga la lista_finala
+            Eliminam primul element din stanga
+        altfel
+            Adaugam primul element din dreapta la lista_finala
+            Eliminam primul element din dreapta
+    
+    // Adăugăm elementele rămase din stânga sau dreapta (dacă există) în lista finală
+    cat timp stanga nu este vida
+        Adaugam primul element din stanga la lista_finala
+        Eliminam primul element din stanga
+    cat timp dreapta nu este vida
+        Adaugam primul element din dreapta la lista_finala
+        Eliminam primul element din dreapta
+    
+    return lista_finala
+*/
