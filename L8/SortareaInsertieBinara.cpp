@@ -3,34 +3,53 @@
 
 using namespace std;
 
-
-
-// Sortare prin Insertie Binara
-vector<int> sortareInserțieBinară(vector<int>& lista) {
-    int lungime = lista.size();
-    for (int index = 1; index < lungime; ++index) {
-        int elementCurent = lista[index];
-        int pozitie = 0;
-        int inceput = 0, sfarsit = index - 1;
-        while (inceput <= sfarsit) {
-            int mijloc = (inceput + sfarsit) / 2;
-            if (lista[mijloc] < elementCurent) {
-                pozitie = mijloc + 1;
-                inceput = mijloc + 1;
-            }
-            else {
-                sfarsit = mijloc - 1;
-            }
+// Functie de cautare binara
+// Functie de cautare binara
+int cautareBinară(const vector<int>& lista, int element, int inceput, int sfarsit) {
+    // Cautare binara pana cand intervalul de cautare este valid
+    while (inceput <= sfarsit) {
+        // Calcul mijloc
+        int mijloc = (inceput + sfarsit) / 2;
+        // Verificare daca elementul este gasit la mijloc
+        if (lista[mijloc] == element) {
+            return mijloc; // Returneaza pozitia gasita
         }
+        // Daca elementul este mai mare, actualizeaza inceputul intervalului
+        else if (lista[mijloc] < element) {
+            inceput = mijloc + 1;
+        }
+        // Altfel, actualizeaza sfarsitul intervalului
+        else {
+            sfarsit = mijloc - 1;
+        }
+    }
+    // Returneaza pozitia la care ar trebui inserat elementul daca nu este gasit
+    return inceput;
+}
+
+// Sortare prin Inserție Binară
+vector<int> sortareInserțieBinară(vector<int>& lista) {
+    // Lungimea listei
+    int lungime = lista.size();
+    // Parcurgere de la al doilea element pana la final
+    for (int index = 1; index < lungime; ++index) {
+        // Salveaza elementul curent pentru inserție
+        int elementCurent = lista[index];
+        // Cauta pozitia corecta pentru inserție folosind cautarea binara
+        int pozitie = cautareBinară(lista, elementCurent, 0, index - 1);
+        // Deplaseaza elementele pentru a face loc pentru elementul curent
         for (int j = index - 1; j >= pozitie; --j) {
             lista[j + 1] = lista[j];
         }
+        // Insereaza elementul curent in pozitia corecta
         lista[pozitie] = elementCurent;
     }
+    // Returneaza lista sortata
     return lista;
 }
 
-// Functie de afisare a vectorului
+
+// Functie pentru afisarea unui vector
 void afisareVector(const vector<int>& lista) {
     for (int element : lista) {
         cout << element << " ";
@@ -39,15 +58,19 @@ void afisareVector(const vector<int>& lista) {
 }
 
 int main() {
-    vector<int> lista1 = { 5, 3, 8, 1, 2, 7, 4, 6 };
-    vector<int> lista2 = { 5, 3, 8, 1, 2, 7, 4, 6 };
+    // Initializare vector neordonat
+    vector<int> lista = { 5, 3, 8, 1, 2, 7, 4, 6 };
 
+    // Afisare vector initial
     cout << "Vector initial: ";
-    afisareVector(lista1);
+    afisareVector(lista);
 
-    cout << "Sortare prin Insertie Binara: ";
-    lista2 = sortareInserțieBinară(lista2);
-    afisareVector(lista2);
+    // Sortare prin Inserție Binară
+    lista = sortareInserțieBinară(lista);
+
+    // Afisare vector sortat
+    cout << "Vector sortat: ";
+    afisareVector(lista);
 
     return 0;
 }
