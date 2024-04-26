@@ -46,3 +46,17 @@ int main() {
 
     return 0;
 }
+
+/*
+În implementarea dată, programarea dinamică este utilizată pentru a rezolva problema numărului maxim de monezi necesare pentru a obține o sumă dată. Iată cum este folosită programarea dinamică în această implementare:
+
+Inițializarea matricei: Se inițializează o matrice bidimensională dp, unde dp[i][j] reprezintă numărul maxim de monede necesare pentru a obține suma j folosind primele i tipuri de monede. Matricea este inițializată cu zero.
+Calculul numărului maxim de monede: Se parcurge matricea dp pe baza următoarelor reguli:
+Dacă valoarea monedei curente (coins[i - 1]) este mai mare decât suma curentă (j), atunci nu o putem folosi pentru a obține suma j. În acest caz, copiem valoarea de pe rândul de mai sus.
+Altfel, avem trei opțiuni:
+Să excludem moneda curentă și să ne bazăm pe numărul maxim de monede pentru a obține suma j cu primele i - 1 tipuri de monede (dp[i - 1][j]).
+Să includem moneda curentă și să adăugăm 1 la numărul maxim de monede pentru a obține suma j - coins[i - 1] cu primele i tipuri de monede (dp[i][j - coins[i - 1]]).
+Să adunăm numărul maxim de monede obținut din cele două opțiuni de mai sus.
+Se alege maximul dintre cele două opțiuni și se actualizează valoarea corespunzătoare în matricea dp.
+Returnarea rezultatului: După ce s-a parcurs întreaga matrice, rezultatul final este stocat în dp[numarMonede][sum], unde numarMonede este numărul total de tipuri de monede disponibile. Acesta reprezintă numărul maxim de monede necesare pentru a obține suma dată.
+*/
