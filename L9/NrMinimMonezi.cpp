@@ -50,3 +50,16 @@ int main() {
  
     return 0;
 }
+
+/*
+În această implementare, programarea dinamică este folosită pentru a rezolva problema numărului minim de monede necesare pentru a obține o anumită sumă. Iată cum este utilizată programarea dinamică în acest context:
+
+Inițializarea matricei: Se inițializează o matrice bidimensională dp, în care fiecare element dp[i][j] reprezintă numărul minim de monede necesare pentru a obține suma j folosind primele i monede. Matricea este inițializată cu valoarea sum + 1 pentru a asigura o evaluare corectă a valorii minime mai târziu.
+Calculul numărului minim de monede: Se parcurge matricea dp pe baza următoarelor reguli:
+Dacă valoarea monedei curente (coins[i - 1]) este mai mare decât suma curentă (j), atunci nu o putem folosi pentru a obține suma j. În acest caz, numărul minim de monede este același ca și pentru primele i - 1 monede.
+Altfel, avem două opțiuni:
+Să nu folosim moneda curentă și să ne bazăm pe numărul minim de monede pentru a obține suma j cu primele i - 1 monede (dp[i - 1][j]).
+Să folosim moneda curentă și să adăugăm 1 la numărul minim de monede pentru a obține suma j - coins[i - 1] cu primele i monede (1 + dp[i][j - coins[i - 1]]).
+Se alege minimul dintre cele două opțiuni și se actualizează valoarea corespunzătoare în matricea dp.
+Returnarea rezultatului: După ce s-a parcurs întreaga matrice, rezultatul final este stocat în dp[n][sum], unde n este numărul total de monede. Dacă acest rezultat este mai mare decât suma (sum), înseamnă că suma nu poate fi obținută cu monedele date și returnăm -1. În caz contrar, returnăm valoarea din matrice, care reprezintă numărul minim de monede necesare pentru a obține suma dată.
+*/
