@@ -50,3 +50,17 @@ int main() {
  
     return 0;
 }
+
+/*
+În această implementare, programarea dinamică este folosită pentru a găsi suma maximă care se poate forma într-un triunghi dat și pentru a urmări numerele care alcătuiesc această sumă maximă. Iată cum se folosește programarea dinamică în acest caz:
+
+Inițializarea matricei auxiliare: Matricea auxiliară C este inițializată cu valorile ultimei linii a triunghiului T. Acest lucru reprezintă cazul de bază pentru algoritmul de programare dinamică.
+Calculul sumei maxime: Pentru fiecare linie a triunghiului (cu excepția ultimei), se calculează suma maximă care se poate forma începând cu fiecare element de pe linia respectivă. Aceasta se face în două pași:
+Pentru fiecare element dintr-o linie dată, se alege valoarea maximă între suma elementului curent și suma maximă a doi succesori posibili:
+Unul situat sub elementul curent (C[i + 1][j]).
+Celălalt situat sub elementul curent și la dreapta lui (C[i + 1][j + 1]).
+Se actualizează matricea auxiliară C cu aceste sume maxime calculate.
+Urmărirea drumului cu suma maximă: După ce s-au calculat toate sumele maxime posibile, se urmărește drumul care duce la suma maximă. Acest lucru se face pornind de la elementul de pe prima linie și prima coloană și alegând mereu cel mai mare dintre cei doi succesori posibili. Astfel, se ajunge la numerele care alcătuiesc suma maximă.
+Această abordare folosește conceptul de programare dinamică pentru a evita recalcularea sumelor intermediare și pentru a găsi suma maximă cu o complexitate eficientă.
+
+*/
