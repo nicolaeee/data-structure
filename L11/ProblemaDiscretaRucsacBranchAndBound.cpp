@@ -131,3 +131,44 @@ int main() {
     return 0;
 }
 
+/*
+Metoda Branch and Bound (ramuri si limite) este o tehnica de optimizare care se foloseste pentru a rezolva probleme de decizie combinatoriale, cum ar fi problema rucsacului. Aceasta metoda exploreaza toate solutiile posibile intr-un mod sistematic, reducand insa numarul total de solutii de examinat prin folosirea unor limite care ajuta la excluderea unor ramuri intregi ale spatiului de solutii.
+
+Cum functioneaza metoda Branch and Bound
+Structura arborelui de decizie:
+
+Problema este reprezentata ca un arbore de decizie. Fiecare nod din arbore reprezinta o subproblema, iar fiecare ramura corespunde unei decizii de a include sau exclude un anumit obiect in rucsac.
+Radacina arborelui reprezinta starea initiala, fara niciun obiect inclus in rucsac.
+Explorarea nodurilor:
+
+Se incepe de la radacina si se exploreaza nodurile in ordine.
+La fiecare nod, se genereaza doi copii: unul in care obiectul curent este inclus in rucsac si unul in care nu este inclus.
+Calcularea limitelor superioare:
+
+Pentru fiecare nod, se calculeaza o limita superioara a profitului maxim care poate fi obtinut pornind din acel nod.
+Daca limita superioara a unui nod este mai mica decat profitul maxim cunoscut pana in acel moment, nodul respectiv si toate subnodurile sale sunt ignorate (taiate).
+Actualizarea profitului maxim:
+
+Daca se gaseste o solutie valida cu un profit mai mare decat cel curent, aceasta devine noul profit maxim.
+Continuarea procesului:
+
+Procesul continua pana cand toate nodurile au fost fie explorate, fie taiate.
+Avantajele metodei Branch and Bound
+Eficienta prin reducerea spatiului de cautare:
+
+Prin utilizarea limitelor superioare, multe ramuri ale arborelui de decizie pot fi eliminate fara a fi necesar sa fie complet explorate. Acest lucru reduce semnificativ numarul total de solutii de examinat, facand metoda mult mai eficienta decat o cautare exaustiva (brute force).
+Flexibilitate:
+
+Metoda poate fi aplicata la o varietate de probleme combinatoriale, nu doar la problema rucsacului. Orice problema care poate fi formulata in termeni de decizii secventiale poate beneficia de aceasta abordare.
+Garantie pentru solutii optime:
+
+Spre deosebire de unele metode euristice care pot gasi solutii rapide, dar nu neaparat optime, Branch and Bound garanteaza gasirea solutiei optime prin explorarea completa a spatiului de solutii, dar intr-un mod eficient.
+De ce sa folosim Branch and Bound pentru problema rucsacului
+Problema rucsacului presupune alegerea unui subset de obiecte astfel incat sa se maximizeze valoarea totala, fara a depasi o anumita capacitate. O abordare bruteforce ar necesita verificarea tuturor subseturilor posibile, ceea ce devine impracticabil pentru un numar mare de obiecte (deoarece numarul de subseturi creste exponential).
+
+Metoda Branch and Bound este benefica pentru problema rucsacului deoarece:
+
+Reduce numarul de subprobleme de examinat prin taierea ramurilor care nu pot duce la o solutie mai buna decat cea cunoscuta.
+Foloseste limite superioare realiste pentru a evalua rapid potentialul fiecarui nod, evitand explorarea inutila a unor solutii nepromitatoare.
+Asigura gasirea solutiei optime fara a verifica exhaustiv toate posibilitatile, ceea ce economiseste timp si resurse de calcul.
+*/
