@@ -37,43 +37,49 @@ int main() {
 }
 
 /*
-Pași Detaliați
-Citirea Inputului:
 
-Programul citește două valori: n și m.
-n reprezintă numărul total de elemente disponibile.
-m reprezintă numărul de elemente care vor fi aranjate.
-Inițializarea Vectorilor:
+Acest program generează Codul Gray pentru un număr n de biți. Iată cum funcționează pas cu pas:
 
-Vectorul a este folosit pentru a stoca aranjamentele curente.
-Vectorul disp (prescurtare de la "disponibil") este folosit pentru a marca elementele care sunt disponibile pentru a fi incluse în aranjament.
-Generarea Aranjamentelor:
+Declarații și Inițializări:
 
-Procesul începe cu apelul funcției aranj de la poziția 1.
-Funcția aranj este o funcție recursivă care încearcă să construiască aranjamente pas cu pas.
-Funcționarea Recursivității:
+a[40][10] este o matrice folosită pentru a stoca Codul Gray.
+a[1][1] = 0 și a[2][1] = 1 inițializează Codul Gray pentru un bit.
+Generarea Codului Gray:
 
-La fiecare pas al recursiei, funcția încearcă să adauge un nou element la aranjamentul curent.
-Aceasta se face prin iterarea prin toate elementele posibile (de la 1 la n).
-Pentru fiecare element, dacă este disponibil (disp[j] este true), acesta este adăugat la aranjament și marcat ca utilizat.
-Backtracking:
+Bucla exterioară for (int k = 2; k <= n; k++) extinde Codul Gray pentru k biți, pornind de la secvența generată pentru k-1 biți.
+k1 = pow(2, k - 1) calculează numărul de elemente din Codul Gray pentru k-1 biți.
+Bucla interioară for (int i = 1; i <= k1; i++) parcurge elementele Codului Gray generate pentru k-1 biți.
+În interiorul acestei bucle:
+a[2 * k1 - i + 1][j] = a[i][j] copiază elementele Codului Gray anterior inversând ordinea.
+a[i][k] = 0 adaugă un 0 la sfârșitul fiecărui element din prima jumătate a Codului Gray extins.
+a[2 * k1 - i + 1][k] = 1 adaugă un 1 la sfârșitul fiecărui element din a doua jumătate a Codului Gray extins.
+Afișarea Codului Gray:
 
-După ce un element este adăugat la aranjament, funcția aranj este apelată recursiv pentru poziția următoare.
-Dacă poziția curentă ajunge la m + 1, înseamnă că aranjamentul curent este complet și este afișat.
-După afișarea unui aranjament complet sau după ce toate posibilitățile au fost explorate pentru poziția curentă, elementul adăugat este marcat din nou ca disponibil (disp[j] este resetat la true). Aceasta permite explorarea altor aranjamente posibile (backtracking).
-Proces Detaliat
-Exemplu de Inițializare:
+Bucla for (int i = 1; i <= pow(2, n); i++) parcurge toate elementele Codului Gray pentru n biți.
+Bucla interioară for (int j = 1; j <= n; j++) afișează fiecare bit al fiecărui element din Codul Gray.
+Explicația Detaliată a Algoritmului
+Inițializare pentru 1 Bit:
 
-Dacă n = 3 și m = 2, vectorul a va avea dimensiunea 4 (indices de la 0 la 3) și disp va avea dimensiunea 4 inițializat cu true.
-Primul Apel Recursiv:
+Se începe cu Codul Gray pentru un singur bit: 0 și 1.
+Extinderea Codului Gray:
 
-aranj(1) începe la prima poziție. Programul va încerca să adauge fiecare element de la 1 la n la prima poziție din aranjament.
-Construcția și Afișarea Aranjamentelor:
+Pentru fiecare extindere la k biți, se ia Codul Gray pentru k-1 biți, se dublează lungimea și se inversează ordinea pentru a crea a doua jumătate.
+Prima jumătate păstrează valorile anterioare cu 0 adăugat la sfârșit.
+A doua jumătate păstrează valorile inversate cu 1 adăugat la sfârșit.
+Exemplu de Funcționare:
 
-Dacă adaugă 1 la prima poziție, atunci apelul recursiv aranj(2) va încerca să adauge elemente la a doua poziție.
-Dacă la a doua poziție adaugă 2, obținem aranjamentul 1 2.
-După afișare, va încerca alte combinații, cum ar fi 1 3, și continuă acest proces până când toate combinațiile posibile sunt explorate.
-Resetarea Stării (Backtracking):
+Pentru n = 2:
+Inițial: 0, 1.
+Extins: 00, 01 (prima jumătate), 11, 10 (a doua jumătate inversată și cu 1 adăugat).
+Rezultat: 00, 01, 11, 10.
+Pentru n = 3:
+Inițial: 00, 01, 11, 10.
+Extins: 000, 001, 011, 010 (prima jumătate), 110, 111, 101, 100 (a doua jumătate inversată și cu 1 adăugat).
+Rezultat: 000, 001, 011, 010, 110, 111, 101, 100.
+Cum Lucrează Programul
+Citește numărul de biți n.
+Inițializează matricea a cu Codul Gray pentru 1 bit.
+Extinde Codul Gray pentru fiecare bit suplimentar până la n.
+Afișează Codul Gray rezultat pentru n biți.
 
-După fiecare apel recursiv, programul resetează elementul curent ca disponibil pentru a explora alte aranjamente care nu au fost încă generate.
 */
