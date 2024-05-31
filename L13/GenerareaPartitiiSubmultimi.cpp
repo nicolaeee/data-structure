@@ -74,13 +74,13 @@ int main() {
 
 /*
 Acest program generează toate particiile unei mulțimi date 
-�
+
 A. O partiție a unei mulțimi este o împărțire a sa în submulțimi nevide, numite blocuri, astfel încât fiecare element al mulțimii să aparțină exact unui bloc.
 
 Funcția generatePartitions este responsabilă pentru generarea tuturor partițiilor. Ea folosește un algoritm iterativ pentru a calcula toate partițiile.
 În funcția printPartition, vectorul partitions este utilizat pentru a stoca blocurile din fiecare partiție. Inițializăm acest vector cu n + 1 vectori vid.
 Pentru fiecare element din mulțimea 
-�
+
 A, determinăm în ce bloc trebuie plasat. Aceasta este realizată folosind vectorul x, care stochează numărul blocului pentru fiecare element.
 În funcția generatePartitions, folosim un buclu while pentru a itera prin toate elementele și pentru a le așeza corect în blocuri. Acest algoritm are la bază regulile de generare a particiilor.
 Atunci când generăm toate posibilitățile, apelăm printPartition pentru a afișa partițiile.
